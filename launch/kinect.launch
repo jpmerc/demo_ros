@@ -21,6 +21,8 @@
        See camera_info_manager docs for calibration URL details. -->
   <arg name="rgb_camera_info_url"   default="file://$(find demo_ros)/calib/rgb_calib.yaml" />
   <arg name="depth_camera_info_url" default="file://$(find demo_ros)/calib/depth_calib.yaml" />
+ <!--  <arg name="rgb_camera_info_url"   default="file://$(find demo_ros)/calib/rgb_calib.yaml" />
+  <arg name="depth_camera_info_url" default="file://$(find demo_ros)/calib/depth_calib.yaml" /> -->
 
   <!-- Use OpenNI's factory-calibrated depth->RGB registration? -->
   <arg name="depth_registration" default="false" />
@@ -35,7 +37,7 @@
   <!-- Optionally suppress loading the driver nodelet and/or publishing the default tf
        tree. Useful if you are playing back recorded raw data from a bag, or are
        supplying a more accurate tf tree from calibration. -->
-  <arg name="load_driver" default="true" />
+  <arg name="load_driver" default="true" />   <!--If true, load the OpenNI device driver. Set to false if raw data is provided by another source, e.g. bag file playback.-->
   <arg name="publish_tf" default="true" />
   <!-- Processing Modules -->
   <arg name="rgb_processing"                  default="true"/>
