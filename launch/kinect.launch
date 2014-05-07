@@ -19,8 +19,8 @@
   <!-- By default, calibrations are stored to file://${ROS_HOME}/camera_info/${NAME}.yaml,
        where ${NAME} is of the form "[rgb|depth]_[serial#]", e.g. "depth_B00367707227042B".
        See camera_info_manager docs for calibration URL details. -->
-  <arg name="rgb_camera_info_url"   default="" />
-  <arg name="depth_camera_info_url" default="" />
+  <arg name="rgb_camera_info_url"   default="file://$(find demo_ros)/calib/rgb_calib.yaml" />
+  <arg name="depth_camera_info_url" default="file://$(find demo_ros)/calib/depth_calib.yaml" />
 
   <!-- Use OpenNI's factory-calibrated depth->RGB registration? -->
   <arg name="depth_registration" default="false" />
