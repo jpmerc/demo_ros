@@ -12,7 +12,7 @@ This package is used as a ROS demonstration. To reproduce the actual package, yo
 
 5) The plane segmentation code of this package is based on the tutorial available at http://wiki.ros.org/pcl/Tutorials, but modified to work with ROS Hydro. Instead of only outputting the plane coefficients like in the example, the planes are extracted in real time in a similar way to http://www.pointclouds.org/documentation/tutorials/extract_indices.php .You can see the results in RVIZ from the topic "extracted_planes" or directly from the pcl viewer created by the program, where the extracted planes are shown in red.
 
-6) To run the example :  
+6) To run the example (in different terminals):  
 
     roslaunch kinect.launch
     rosrun demo_ros plane_segmentation
