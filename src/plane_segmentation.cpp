@@ -17,6 +17,11 @@
 
 #include <pcl/visualization/pcl_visualizer.h>
 
+
+#include <vtkRenderWindow.h>
+
+
+
 ros::Publisher pub;
 ros::Publisher pub2;
 pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_p(new pcl::PointCloud<pcl::PointXYZRGB>), cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
@@ -37,20 +42,6 @@ void printToPCLViewer(){
 
 }
 
-// Press "r" to update the Viewer
-void keyboardEventOccurred (const pcl::visualization::KeyboardEvent &event, void* viewer_void)
-{
-    l_count = l_count + 1;
-    if(l_count < 2){
-        boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer = *static_cast<boost::shared_ptr<pcl::visualization::PCLVisualizer> *> (viewer_void);
-        if (event.getKeySym () == "r"){
-            printToPCLViewer();
-        }
-    }
-    else{
-        l_count = 0;
-    }
-}
 
 // Callback Function for the subscribed ROS topic
 void cloud_cb (const pcl::PCLPointCloud2ConstPtr& input){
@@ -107,6 +98,10 @@ void cloud_cb (const pcl::PCLPointCloud2ConstPtr& input){
     pcl_conversions::fromPCL(*input,not_segmented);
     pub.publish (segmented);
     pub2.publish(not_segmented);
+
+    //Update PCL Viewer
+    printToPCLViewer();
+
 }
 
 int
@@ -123,17 +118,21 @@ main (int argc, char** argv)
     pub = nh.advertise<sensor_msgs::PointCloud2> ("/extracted_planes", 1);
     pub2 = nh.advertise<sensor_msgs::PointCloud2> ("/extracted_planes_not", 1);
 
-    // Spin
-    //ros::spin ();
-
 
     //PCL Viewer
-    pclViewer->setBackgroundColor (0, 0, 0);
-    printToPCLViewer();
-    pclViewer->registerKeyboardCallback (keyboardEventOccurred, (void*)&pclViewer);
-    while (!pclViewer->wasStopped())    {
+     pclViewer->setBackgroundColor (0, 0, 0);
+     pclViewer->initCameraParameters ();
+     pclViewer->setCameraPosition(0,0,0,0,0,1,0,-1,0);
+     vtkSmartPointer<vtkRenderWindow> renderWindow = pclViewer->getRenderWindow();
+     renderWindow->SetSize(800,450);
+     renderWindow->Render();
+
+     ros::Rate r(30);
+    while (ros::ok() && !pclViewer->wasStopped()) {
         pclViewer->spinOnce (100);
         ros::spinOnce();
-        boost::this_thread::sleep (boost::posix_time::microseconds (10000));
+       // boost::this_thread::sleep (boost::posix_time::microseconds (10000));
+        r.sleep();
     }
+    return 0;
 }
