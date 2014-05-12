@@ -4,7 +4,7 @@ This package is used as a ROS demonstration. To reproduce the actual package, yo
 
 1) Install ROS (http://wiki.ros.org/ROS/Installation)
 
-2) Install OpenNi drivers with the command : sudo apt-get install ros-hydro-openni-camera ros-hydro-openni-launch (http://wiki.ros.org/openni_kinect)
+2) Install OpenNi drivers with the command : sudo apt-get install ros-hydro-openni-camera ros-hydro-openni-launch (http://wiki.ros.org/openni_kinect). OpenNi was preferred to Freenect, because at the moment, ROS works with version 0.3.2 of freenect and Kinect model 1473 works only with versions with 0.4 or later.
 
 3) Follow ROS tutorials (http://wiki.ros.org/ROS/Tutorials) to create a ROS workspace. Clone this repository in your package directory. Build the project with the command catkin_make at the root of the workspace.
 
